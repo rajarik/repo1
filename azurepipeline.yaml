@@ -27,7 +27,7 @@ stages:
       inputs:
         deploymentScope: 'Resource Group'
         azureResourceManagerConnection: 'svc-conn-name'  # Default service connection
-        subscriptionId: '<YOUR_SUBSCRIPTION_ID>'
+        subscriptionId: '50392902-2c6e-4ee3-9fa8-bf7881cbe723'
         action: 'Create Or Update Resource Group'
         resourceGroupName: '$(resourceGroupName)'
         location: '$(location)'
