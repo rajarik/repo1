@@ -26,7 +26,7 @@ stages:
       displayName: 'Deploy VM using ARM Template'
       inputs:
         deploymentScope: 'Resource Group'
-        azureResourceManagerConnection: 'svc-conn-name'  # Default service connection
+        azureResourceManagerConnection: 'svc_name'  # Default service connection
         subscriptionId: '50392902-2c6e-4ee3-9fa8-bf7881cbe723'
         action: 'Create Or Update Resource Group'
         resourceGroupName: '$(resourceGroupName)'
