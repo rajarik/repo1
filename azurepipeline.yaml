@@ -1,0 +1,43 @@
+trigger:
+- main  # Adjust branch as needed
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  resourceGroupName: 'MyResourceGroup'
+  location: 'eastus'
+  vmName: 'MyAzureVM'
+  adminUsername: 'azadmin'
+  adminPassword: 'Welcome@1234'  # Store this securely in a secret variable
+  imagePublisher: 'Canonical'
+  imageOffer: 'UbuntuServer'
+  imageSku: '18.04-LTS'
+  vmSize: 'Standard_B1s'
+
+stages:
+- stage: DeployVM
+  displayName: 'Deploy Azure VM'
+  jobs:
+  - job: Deploy
+    displayName: 'Create Azure VM'
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      displayName: 'Deploy VM using ARM Template'
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: 'svc-conn-name'  # Default service connection
+        subscriptionId: '<YOUR_SUBSCRIPTION_ID>'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: '$(resourceGroupName)'
+        location: '$(location)'
+        templateLocation: 'Linked artifact'
+        csmFile: 'arm-template.json'  # Ensure this file exists in your repo
+        overrideParameters: >
+          -adminUsername $(adminUsername)
+          -adminPassword $(adminPassword)
+          -vmName $(vmName)
+          -imagePublisher $(imagePublisher)
+          -imageOffer $(imageOffer)
+          -imageSku $(imageSku)
+          -vmSize $(vmSize)
